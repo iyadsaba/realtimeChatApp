@@ -1,3 +1,4 @@
+import Axios from 'axios';
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -39,10 +40,19 @@ const app = new Vue({
     },
     methods:{
         addMessage:function(data){
-            //add to existing messages 
+
+            axios.post('/messages',data)
+            .then(respone => console.log(respone))
+            .catch(function(error){
+                console.log(error);
+            })
             this.messages.push(data);
-            console.log(data);
-            //Presist to the database etc 
         }
+    },
+    created(){
+        axios.get('/messages')
+        .then( response => this.messages = response.data)
+        .catch(error => console.log(error));
+        ;
     }
 });

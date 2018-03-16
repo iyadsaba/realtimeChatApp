@@ -16,6 +16,22 @@ Route::get('/', function () {
 });
 
 
-Route::get('/chat',function(){
-    return view('chat');
+
+
+Route::group(['middleware' => ['auth']], function () {
+    
+    Route::get('/chat',function(){
+        return view('chat');
+    });
+
+    Route::get('/messages','MessagesController@index');
+    
+    Route::post('/messages','MessagesController@store');
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
