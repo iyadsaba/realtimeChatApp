@@ -1,7 +1,8 @@
 <template>
-    <div>
-        <p>{{message}}</p>
-        <small>{{user}}</small>
+    <div class="chat-message">
+        <small>{{message.user}} :</small>
+        <p>{{message.message}}</p>
+        
     </div>
 
 </template>
@@ -9,11 +10,12 @@
 
 <script>
 export default {
-
-    data(){
-        return {
-            message:"my first  text on my chat app",
-            user:"iyad saba"
+    props:{
+        message:{
+            type:Object,
+            default:function(){
+                return {message:'',user:''};
+             }
         }
     }
 }

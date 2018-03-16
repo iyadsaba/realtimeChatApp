@@ -10,11 +10,24 @@
     <title>Chat Room</title>
 </head>
 <body>
-<div id="app">
-    <h1 class="text-center"><i class="fa fa-comments"> Chat Room <i class="fa fa-comments"></i></h1>
-        <chat-message></chat-message>
-        <chat-log></chat-log>
-        <chat-composer></chat-composer>
+    <h1 class="text-center"> Chat Room <i class="fa fa-comments"></i></h1>
+
+
+    <div id="app">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2 "></div>
+                <div class="col-md-8 col-xs-12">
+                    <chat-message></chat-message>
+                    <chat-log :messages="messages"></chat-log>
+                    <chat-composer v-on:messagesent="addMessage"></chat-composer>
+                </div>
+                <div class="col-md-2 "></div>
+
+            </div>
+
+        </div>
+     
     </div>
 
     <script src="js/app.js" charset="utf-8"></script>
