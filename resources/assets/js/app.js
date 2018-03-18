@@ -1,3 +1,4 @@
+import Axios from 'axios';
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -9,16 +10,28 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+var socket = io('http://localhost:3000');
+// var socket = io('http://192.168.10.10:3000');
+
+socket.on("test-channel:App\\Events\\EventName", function (message) {
+   
+
+
+
+    
+});
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
- */
+//  */
 
-Vue.component('example', require('./components/ExampleComponent.vue'));
-Vue.component('chat-message', require('./components/chat-message.vue'));
-Vue.component('chat-log', require('./components/chat-log.vue'));
-Vue.component('chat-composer', require('./components/chat-composer.vue'));
+// Vue.component('example', require('./components/ExampleComponent.vue'));
+// Vue.component('chat-message', require('./components/chat-message.vue'));
+// Vue.component('chat-log', require('./components/chat-log.vue'));
+// Vue.component('chat-composer', require('./components/chat-composer.vue'));
+Vue.component('chat-room',require('./components/chat-room.vue'));
 
 const app = new Vue({
     el: '#app',
@@ -26,23 +39,42 @@ const app = new Vue({
         return {
             messages: [
                 {
-                    message: "Hey!",
-                    user: "iyad"
+                    text: "Hey!",
+                    sender: "iyad"
                 },
                 {
-                    message: "hello there!",
-                    user: "mona"
+                    text: "hello there!",
+                    sender: "mona"
                 }
-            ] 
+            ],
+            users:{},
+            rooms: {}
         }
        
     },
     methods:{
         addMessage:function(data){
-            //add to existing messages 
+
+            axios.post('/messages',data)
+            .then(respone => console.log(respone))
+            .catch(function(error){
+                console.log(error);
+            })
             this.messages.push(data);
-            console.log(data);
-            //Presist to the database etc 
         }
+    },
+    created(){
+        //get all messages 
+        axios.get('/messages').then( response => this.messages = response.data )
+        .catch(error => console.log(error));
+        
+        //get all users 
+        axios.get("/users").then(response => { this.users = response.data })
+        .catch(error => console.log(error));
+        
+        //get all groups 
+        axios.get("/groups").then(response => { this.rooms = response.data })
+        .catch(error => console.log(error));
     }
 });
+
