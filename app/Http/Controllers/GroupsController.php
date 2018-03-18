@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Group;
 use Illuminate\Http\Request;
 
 class GroupsController extends Controller
@@ -13,7 +14,7 @@ class GroupsController extends Controller
      */
     public function index()
     {
-        //
+        return Group::with('messages','subscribers','groupAdmin')->get();
     }
 
     /**

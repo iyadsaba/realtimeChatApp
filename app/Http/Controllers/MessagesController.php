@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessagePosted;
+use App\Http\Resources\MessageResource;
 use App\Message;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class MessagesController extends Controller
@@ -15,7 +18,9 @@ class MessagesController extends Controller
      */
     public function index()
     {
-        return Message::with('user','group')->get();
+//        return Message::with('user','group')->get();
+
+        return Response::create(MessageResource::collection(Message::all()));
 
     }
 
@@ -42,6 +47,10 @@ class MessagesController extends Controller
 //        echo $user;
 
         $user->messages()->create(['message'=>$message,'group_id'=>1]);
+
+        //announce that a new message has been posted
+        event(new MessagePosted($message,$user));
+
 
         return ['status'=>'OK'];
     }

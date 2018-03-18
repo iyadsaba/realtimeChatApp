@@ -1,6 +1,5 @@
 <template>
   <div class="chat-composer">
-  
         <div class="row">
             <div class="col-md-6">
                 <div class="input-group">
@@ -10,15 +9,14 @@
                     </span>
                 </div>
             </div>
-
         </div>
-
   </div>
 </template>
 
-
 <script>
 export default {
+
+    
     data(){
         return{
             messageText: ''
