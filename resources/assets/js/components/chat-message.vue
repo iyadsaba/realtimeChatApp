@@ -1,10 +1,9 @@
 <template>
     <div class="chat-message">
-        <small>{{message.user}} :</small>
-        <p>{{message.message}}</p>
+        <small>{{message.sender}} :</small>
+        <p>{{message.text}}</p>
         
     </div>
-
 </template>
 
 
@@ -14,7 +13,7 @@ export default {
         message:{
             type:Object,
             default:function(){
-                return {message:'',user:''};
+                return {sender:'',text:''};
              }
         }
     }

@@ -1,24 +1,18 @@
 <template>
-  <div class="chat-composer">
-  
-        <div class="row">
-            <div class="col-md-6">
-                <div class="input-group">
-                    <input type="text" class="form-control"  @keyup.enter="sendMessage"  placeholder="start typing your message here ..." v-model="messageText">
-                    <span class="input-group-btn">
-                        <button class="btn btn-secondary" type="button" @click="sendMessage">Send <i class="fa fa-paper-plane"></i></button>
-                    </span>
-                </div>
-            </div>
-
+        <div class="chat-message clearfix">
+        <textarea name="message-to-send" id="message-to-send" @keyup.enter="sendMessage"  placeholder="start typing your message here ..." v-model="messageText" rows="3"></textarea>
+        <i class="fa fa-file-o"></i> 
+        <i class="fa fa-file-image-o"></i>       
+        <button  @click="sendMessage">Send</button>
         </div>
-
-  </div>
 </template>
 
 
 <script>
+
 export default {
+
+    
     data(){
         return{
             messageText: ''
@@ -31,7 +25,17 @@ export default {
                 user:"static user"
             });
             this.messageText = '';
-        }
+        },
+          send: function() {
+      let data = {
+        text: this.text,
+        sender: this.name
+      };
+      socket.emit("textMessage", data, this.room);
+      this.messages.push(data);
+      this.text = "";
+      this.isTyping = false;
+    }
     }
   
 }

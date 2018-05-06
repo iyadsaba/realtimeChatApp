@@ -14,22 +14,19 @@
 
 
     <div id="app">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-2 "></div>
-                <div class="col-md-8 col-xs-12">
-                    <chat-message></chat-message>
-                    <chat-log :messages="messages"></chat-log>
-                    <chat-composer v-on:messagesent="addMessage"></chat-composer>
-                </div>
-                <div class="col-md-2 "></div>
-
+        <div class="container clearfix">
+            <chat-sidebar :users="users" :rooms="groups"></chat-sidebar>
+            <div class="chat">
+                <chat-room :messages="messages"></chat-room>
+                <chat-composer v-on:typing="typing" v-on:sendMessage="sendMessage"></chat-composer>
             </div>
-
         </div>
-     
     </div>
 
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io('http://localhost:3000');
+    </script>
     <script src="js/app.js" charset="utf-8"></script>
 </body>
 </html>
